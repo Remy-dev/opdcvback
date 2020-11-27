@@ -1,0 +1,14 @@
+{% extends '@email/default/notification/body.html.twig' %}
+
+{% block content %}
+
+    <h1>Sorry your comment has been rejected </h1>
+
+     Date : {{ comment.createdAt }}<br/>
+
+    <p>
+       This content can not be published : {{ comment.content }}
+    </p>
+
+{% endblock %}
+

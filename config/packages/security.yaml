@@ -1,0 +1,95 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+        App\Entity\Admin:
+            algorithm: auto
+
+
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+
+        # used to reload user from session & other features (e.g. switch_user)
+        app_admin_provider:
+            entity:
+               class: App\Entity\Admin
+               property: username
+        api_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        # used to reload user from session & other features (e.g. switch_user)
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api_login:
+            pattern:  ^/api/login
+            stateless: true
+            provider: api_user_provider
+            json_login:
+                check_path:               /api/login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:   ^/api
+            anonymous: true
+            stateless: true
+            lazy: true
+            provider: api_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        main:
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            anonymous: true
+            lazy: true
+
+            provider: app_admin_provider
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: login[_username]
+                password_parameter: login[_password]
+
+            guard:
+                authenticators:
+                    - App\Security\AppAuthenticator
+
+            logout:
+                path:   /logout
+                target: app_login
+
+    access-control:
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/[a-z]+/\d+, roles: ROLE_USER }
+        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_MODERATOR
+        ROLE_MODERATOR: ROLE_PRODUCER
+        ROLE_PRODUCER: ROLE_USER
+
+
+
+          #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+
+
