@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Config\ContainerParametersResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -107,6 +109,7 @@ class SecurityController extends AbstractController
 
     public function sendMail(User $user, Token $token)
     {
+
         $email = (new TemplatedEmail())
             ->from('alienmailer@example.com')
             ->to($user->getEmail())
@@ -125,19 +128,27 @@ class SecurityController extends AbstractController
     /**
      * @Route("/mail-validation/{id}/{token}", name="mail-validation", methods={"GET"})
      */
-    public function mailValidation(User $user, $token,TokenRepository $tokenRepository)
+    public function mailValidation(User $user, $token,TokenRepository $tokenRepository, Request $request)
     {
-        $fetch = $tokenRepository->findOneBy(['value' => $token]);
-        if (!empty($fetch) && null != $fetch)
+        $this->logger->info('Registration from email ' . $request);
+
+        $sanitizedToken = htmlspecialchars($token);
+
+
+        if ($user instanceof UserInterface)
         {
+            $fetchedToken = $tokenRepository->findOneBy(['value' => $sanitizedToken]);
 
-            $user->setActive(true);
-            $this->manager->persist($user);
-            $this->manager->flush();
-            $this->manager->remove($fetch);
-            $this->manager->flush();
-            return $this->redirect('http://www.opdcv.com/login');
+            if (!empty($fetchedToken) && null != $fetchedToken)
+            {
+                $user->setActive(true);
+                $this->manager->persist($user);
+                $this->manager->remove($fetchedToken);
+                $this->manager->flush();
+                return $this->redirect('http://www.opdcv.com/login');
 
+            }
+            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         return new Response('', Response::HTTP_NOT_FOUND);
