@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
  *
  *     collectionOperations={
@@ -50,11 +51,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(BooleanFilter::class, properties={"producer"})
  * @ApiFilter(RandomFilter::class, properties={"random"})
  *
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ *
  */
 class User implements UserInterface
 {
-    use Hydrator;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -235,7 +235,7 @@ class User implements UserInterface
     private $active = false;
 
 
-    public function __construct($datas = [])
+    public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->itineraries = new ArrayCollection();
@@ -245,7 +245,6 @@ class User implements UserInterface
         $this->tags = new ArrayCollection();
         $this->discussions = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->hydrate($datas);
     }
 
     public function __toString(): string
