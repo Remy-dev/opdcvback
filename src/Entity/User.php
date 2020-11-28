@@ -247,7 +247,10 @@ class User implements UserInterface
         $this->hydrate($datas);
     }
 
-
+    public function __toString(): string
+    {
+        return $this->getUsername();
+    }
 
     public function getId(): ?int
     {
