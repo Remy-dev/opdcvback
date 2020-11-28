@@ -61,7 +61,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @Groups({"write","read"})
      */
-    private ?int $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
