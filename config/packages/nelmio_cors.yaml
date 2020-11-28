@@ -2,20 +2,27 @@ nelmio_cors:
     defaults:
         origin_regex: true
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
-        allow_methods: ['GET', 'OPTIONS', 'POST']
-        allow_headers: ['Content-Type', 'Authorization', 'X-API-TOKEN']
+        allow_methods: ['GET', 'OPTIONS', 'POST', 'HEAD']
+        allow_headers: ['Content-Type', 'Authorization']
         expose_headers: ['Link']
         max_age: 3600
     paths:
         '^/api/':
             allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
             allow_headers: ['Content-Type', 'Authorization']
-            allow_methods: ['POST', 'PUT', 'OPTIONS', 'PATCH', 'GET', 'DELETE']
+            allow_methods: ['POST', 'PUT', 'OPTIONS', 'PATCH', 'GET', 'DELETE','HEAD']
             expose_headers: ['Link']
             max_age: 3600
 
         '^/mail-validation':
             allow_origin: ['*']
-            allow_headers: ['*'] # mettre des headers personnalisés ?
+            allow_headers: ['*']
             allow_methods: ['GET', 'OPTIONS']
+            max_age: 3600
+
+        '^/admin':
+            allow_origin: ['%env(CORS_ALLOW_ADMIN_ORIGIN)%']
+            allow_headers: ['*']
+            allow_methods: ['GET', 'POST', 'HEAD', 'PUT', 'DELETE']
+            expose_headers: ['link']
             max_age: 3600
