@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=DiscussionRepository::class)
  * @ApiResource()
+ * @ORM\Table (name="`discussion`")
  * @ORM\HasLifecycleCallbacks
  */
 class Discussion

@@ -52,6 +52,8 @@ final class UserFactory extends ModelFactory
         // see https://github.com/zenstruck/foundry#initialization
         return $this
             ->afterInstantiate(function(User $user) {
+                $password = $this->encoder->encodePassword($user, $user->getUsername());
+                $user->setPassword($password);
                 if ($user->isProducer()) {
                     $user->setCompanyPro(faker()->company);
                     $user->setDescriptionPro(faker()->realText(50));
@@ -62,11 +64,9 @@ final class UserFactory extends ModelFactory
                     $user->setPhonePro(faker()->phoneNumber);
                 }
             })
-            ->afterPersist(function (User $user) {
-                $username = (string) $user->getUsername();
-                $password = $this->encoder->encodePassword($user, $username);
-                $user->setPassword($password);
-            })
+           /* ->afterPersist(function (User $user) {
+
+            })*/
         ;
     }
 

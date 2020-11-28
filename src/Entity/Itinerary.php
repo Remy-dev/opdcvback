@@ -13,6 +13,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table (name="`itinerary`")
  * @ApiResource (
  *
  *     collectionOperations={

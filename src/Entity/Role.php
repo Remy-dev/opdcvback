@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
+ * @ORM\Table (name="`role`")
  * @ApiResource(
  *     attributes={"security"="is_granted('ROLE_ADMIN')"}
  * )

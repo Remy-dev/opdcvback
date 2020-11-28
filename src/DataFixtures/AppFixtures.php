@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
         $userGroup = array(
             'admin' => ['blandine', 'raphael', 'maureen', 'ryme', 'thomas'],
             'moderator' => ['john', 'jeanette', 'sol', 'lamia', 'martin'],
-            'producer' => ['jean', 'claude'],
+            'producer' => ['jean','claude'],
             'user' => ['remy', 'roland', 'marc'],
         );
 
@@ -68,52 +68,53 @@ class AppFixtures extends Fixture
             $manager->persist($role);
             $manager->flush();
 
+
             foreach ($users as $u) {
 
                     if ($role->getName() === 'Utilisateur' || $role->getName() === 'Producteur') {
 
-                        $user = UserFactory::new()->create(['username' => $u])->object();
-                        $user->setRole($role);
-
+                        $user = UserFactory::new()->create([
+                            'role' => $role,
+                            'username' => \trim($u),
+                            ])->object();
                         print 'Adding user ' . $user->getUsername() . PHP_EOL;
 
                         AddressFactory::new()->create(['user' => $user]);
-
+                        print 'Adding itinerary' ;
                         $itinerary = ItineraryFactory::new()->create()->object();
                         $itinerary->addUser($user);
 
                         if ($user->isProducer()) {
 
                             for ($z = 0; $z < 5; $z++) {
-                                $product = ProductFactory::new()->create()->object();
-                                $product->setUser($user);
+                                ProductFactory::new()->create(['user' => $user]);
+
                             }
                             for ($e = 0; $e < 5; $e++) {
-                                $tag = TagFactory::new()->create()->object();
-                                $user->addTag($tag);
+
+                                $user->addTag(TagFactory::new()->create()->object());
                             }
                         }
 
                     } elseif ($role->getName() === 'Administrateur') {
 
                         print 'role id : ' . $role->getId() . PHP_EOL;
-                        $admin = AdminFactory::new()->create(['username' => $u])->object();
-                        $admin->setRole($role);
+                        AdminFactory::new()->create([
+                            'username' => $u,
+                            'role' => $role
+                        ]);
 
-                        print 'Adding admin ' . $admin->getUsername() . PHP_EOL;
                     }
             }
 
-            $users = $this->userRepository->findAll();
-            print 'commentaire : ' . PHP_EOL;
-
+          /*  $users = $this->userRepository->findAll();
             foreach ($users as $user) {
-                $comment = CommentFactory::new()->create(['author' => $user ])->object();
                 $addressee = $this->userRepository->findOneRandom($user);
-                print 'addressee contains id : ' . $addressee->getId() . PHP_EOL;
-                $comment->setAddressee($addressee);
-
-            }
+                CommentFactory::new()->create([
+                    'author' => $user,
+                    'addressee' => $addressee
+                ]);
+            }*/
 
         }
 

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TokenRepository::class)
+ * @ORM\Table (name="`token`")
  * @ORM\HasLifecycleCallbacks()
  */
 class Token

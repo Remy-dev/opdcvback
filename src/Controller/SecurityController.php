@@ -97,7 +97,7 @@ class SecurityController extends AbstractController
         $this->manager->persist($user);
         $this->manager->persist($this->token);
         $this->manager->flush();
-        $this->sendMail($user, $this->token);
+        // $this->sendMail($user, $this->token);
 
         return new Response('', Response::HTTP_OK);
     }

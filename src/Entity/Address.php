@@ -24,6 +24,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * )
  * @ApiFilter (SearchFilter::class, properties={"user"})
  * @ORM\Entity(repositoryClass=AddressRepository::class)
+ * @ORM\Table (name="`address`")
  */
 class Address
 {

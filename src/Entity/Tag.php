@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table (name="`tag`")
  * @ApiResource (
  *     collectionOperations={
  *          "get",

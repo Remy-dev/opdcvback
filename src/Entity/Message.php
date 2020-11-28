@@ -11,7 +11,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\HasLifecycleCallbacks()
- *
+ * @ORM\Table (name="`message`")
  * @ApiResource(
  *
  *     mercure=true,
