@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Role;
 use App\Entity\Token;
 use App\Entity\User;
 use App\Repository\RoleRepository;
 use App\Repository\TokenRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Object_;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Config\ContainerParametersResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -23,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter;
+
 class SecurityController extends AbstractController
 {
 
@@ -129,7 +128,7 @@ class SecurityController extends AbstractController
             ->context([
                 'user' => $user ,
                 'token' => $token,
-                'expiration_date' => new \DateTime("+1 hour")
+                'expiration_date' => new DateTime("+1 hour")
 
             ]);
 
