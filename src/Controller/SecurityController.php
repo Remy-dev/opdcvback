@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
             $user =  $serializer->deserialize(
                 $request->getContent(),
                 User::class,
-                'ld+json'
+                'json'
             );
         } catch (NotEncodableValueException $e) {
             return $this->json(
