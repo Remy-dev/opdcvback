@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository, UserRepository $userRepository)
+    public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository)
     {
         try {
             $user =  $serializer->deserialize(
@@ -100,8 +100,8 @@ class SecurityController extends AbstractController
 
             $this->manager->persist($this->token);
             $this->manager->flush();
-            $user =  $userRepository->findOneBy(['username' => $user->getUsername()]);
-            $this->sendMail($user, $this->token);
+            $fetchedUser =  $this->userRepository->findOneBy(['username' => $user->getUsername()]);
+            $this->sendMail($fetchedUser, $this->token);
 
 
             return new Response('', Response::HTTP_OK);
@@ -137,14 +137,13 @@ class SecurityController extends AbstractController
     }
     /**
      * @Route("/mail-validation/{id}/{token}", name="mail-validation", methods={"GET"}, requirements={"id"="\d+"})
-     * @ParamConverter("id", class="App\Entity\User", options={"id": "id"})
      */
-    public function mailValidation(User $user, $token,TokenRepository $tokenRepository, Request $request)
+    public function mailValidation(int $id, $token,TokenRepository $tokenRepository, Request $request)
     {
         $this->logger->info('Registration from email ' . $request);
 
         $sanitizedToken = htmlspecialchars($token);
-
+        $user = $this->userRepository->find($id);
 
         if ($user instanceof UserInterface)
         {
@@ -159,7 +158,6 @@ class SecurityController extends AbstractController
                 return $this->redirect('https://hyp-fopdcv.herokuapp.com/login');
 
             }
-            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         return new Response('', Response::HTTP_NOT_FOUND);
