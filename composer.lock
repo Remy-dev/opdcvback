@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e9cf3047eab227a0b6f7b3dad8acfb3",
+    "content-hash": "684d96904df9bfb1fe04b79101b299fa",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3747,6 +3747,52 @@
                 "psr-3"
             ],
             "time": "2020-03-23T09:12:05+00:00"
+        },
+        {
+            "name": "qbbr/pgsql-doctrine-random-function",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qbbr/PgsqlDoctrineRandomFunction.git",
+                "reference": "cf2e10ae9a9c3b7c83d586c6a3de40dfca2c89ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qbbr/PgsqlDoctrineRandomFunction/zipball/cf2e10ae9a9c3b7c83d586c6a3de40dfca2c89ec",
+                "reference": "cf2e10ae9a9c3b7c83d586c6a3de40dfca2c89ec",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": ">=2.2.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Qbbr\\PgsqlDoctrineRandomFunction\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sokolov Innokenty",
+                    "homepage": "https://github.com/qbbr"
+                }
+            ],
+            "description": "PostgreSQL RANDOM() function for Doctrine ORM",
+            "homepage": "https://github.com/qbbr/PgsqlDoctrineRandomFunction",
+            "keywords": [
+                "doctrine",
+                "function",
+                "pgsql",
+                "postgresql",
+                "qbbr",
+                "random",
+                "symfony"
+            ],
+            "time": "2016-03-12T11:10:05+00:00"
         },
         {
             "name": "react/promise",

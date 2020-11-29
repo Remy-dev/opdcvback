@@ -2,6 +2,9 @@
     "php": {
         "version": "7.4"
     },
+    "qbbr/pgsql-doctrine-random-function": {
+        "version": "1.0.1"
+    },
     "symfony/profiler-pack": {
         "version": "v1.0.5"
     },
