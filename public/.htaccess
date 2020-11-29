@@ -6,7 +6,7 @@
 DirectoryIndex index.php
 
 <IfModule mod_headers.c>
-    Header merge access-control-allow-origin "http://www.opdcv.com"
+    Header merge access-control-allow-origin "http://www.hyp-fopdcv.herokuapp.com"
     Header set X-Content-Type-Options "nosniff"
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Frame-Options "SAMEORIGIN"
