@@ -12,7 +12,8 @@ class RandomFilter extends AbstractContextAwareFilter
     {
 
             $queryBuilder
-                ->orderBy( 'RAND()','DESC');
+                ->select('RANDOM()')
+                ->orderBy( 'DESC');
 
     }
 
