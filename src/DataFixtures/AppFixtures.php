@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
         $userGroup = array(
             'admin' => ['blandine', 'raphael', 'maureen', 'ryme', 'thomas'],
             'moderator' => ['john', 'jeanette', 'sol', 'lamia', 'martin'],
-            'producer' => ['jean','claude'],
+            'producer' => ['jean','claude', 'eliot', 'joe', 'ernest'],
             'user' => ['remy', 'roland', 'marc'],
         );
 
