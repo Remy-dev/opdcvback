@@ -74,7 +74,8 @@ security:
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/[a-z]+/\d+, roles: ROLE_USER }
         - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8000}
+        - { path: ^/login, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8000 }
+        - { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8000 }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_MODERATOR
