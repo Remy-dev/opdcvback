@@ -9,6 +9,7 @@ use App\Repository\RoleRepository;
 use App\Repository\TokenRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Object_;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -66,11 +67,12 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository)
     {
+        $form = filter_input_array($request->getMethod(),FILTER_SANITIZE_SPECIAL_CHARS);
         try {
-            $user = $serializer->deserialize(
-                $request->getContent(),
+            $user =  $serializer->deserialize(
+                $form,
                 User::class,
-                'json'
+                'ld+json'
             );
         } catch (NotEncodableValueException $e) {
             return $this->json(
@@ -81,25 +83,32 @@ class SecurityController extends AbstractController
                 Response::HTTP_BAD_REQUEST
             );
         }
-        $role = $roleRepository->findOneByRoleName('ROLE_USER');
-        $plainPassword = $user->getPassword();
-        $encodedPassword = $passwordEncoder->encodePassword($user, $plainPassword);
-        $user->setPassword($encodedPassword);
-        $user->setRole($role);
-
-        if($user->isProducer())
+        if ($user instanceof UserInterface )
         {
-            $role = $roleRepository->findOneByRoleName('ROLE_PRODUCER');
+            $role = $roleRepository->findOneByRoleName('ROLE_USER');
+            $plainPassword = $user->getPassword();
+            $encodedPassword = $passwordEncoder->encodePassword($user, $plainPassword);
+            $user->setPassword($encodedPassword);
             $user->setRole($role);
+
+            if($user->isProducer())
+            {
+                $role = $roleRepository->findOneByRoleName('ROLE_PRODUCER');
+                $user->setRole($role);
+            }
+
+            $this->encodeToken($user);
+            $this->manager->persist($user);
+
+            $this->manager->persist($this->token);
+            $this->manager->flush();
+            $this->sendMail($user, $this->token);
+
+            return new Response('', Response::HTTP_OK);
         }
 
-        $this->encodeToken($user);
-        $this->manager->persist($user);
-        $this->manager->persist($this->token);
-        $this->manager->flush();
-        $this->sendMail($user, $this->token);
 
-        return new Response('', Response::HTTP_OK);
+
     }
 
     public function encodeToken($user)
