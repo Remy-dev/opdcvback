@@ -157,7 +157,7 @@ class SecurityController extends AbstractController
                 $this->manager->persist($user);
                 $this->manager->remove($fetchedToken);
                 $this->manager->flush();
-                return $this->redirect('http://www.opdcv.com/login');
+                return $this->redirect('https://hyp-fopdcv.herokuapp.com/login');
 
             }
             return new Response('', Response::HTTP_NOT_FOUND);
