@@ -138,12 +138,11 @@ class SecurityController extends AbstractController
     /**
      * @Route("/mail-validation/{id}/{token}", name="mail-validation", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function mailValidation(int $id, $token,TokenRepository $tokenRepository, Request $request)
+    public function mailValidation(User $user, $token,TokenRepository $tokenRepository, Request $request)
     {
         $this->logger->info('Registration from email ' . $request);
 
         $sanitizedToken = htmlspecialchars($token);
-        $user = $this->userRepository->find($id);
 
         if ($user instanceof UserInterface)
         {
