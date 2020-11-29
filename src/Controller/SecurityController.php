@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository)
+    public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository, UserRepository $userRepository)
     {
         try {
             $user =  $serializer->deserialize(
@@ -100,7 +100,7 @@ class SecurityController extends AbstractController
 
             $this->manager->persist($this->token);
             $this->manager->flush();
-
+            $user =  $userRepository->findOneBy(['username' => $user->getUsername()]);
             $this->sendMail($user, $this->token);
 
 
@@ -117,7 +117,7 @@ class SecurityController extends AbstractController
         $this->token->setValue(md5($user->getEmail()));
     }
 
-    public function sendMail($user, Token $token)
+    public function sendMail(User $user, Token $token)
     {
 
         $email = (new TemplatedEmail())
