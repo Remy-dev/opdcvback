@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
-
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter;
 class SecurityController extends AbstractController
 {
 
