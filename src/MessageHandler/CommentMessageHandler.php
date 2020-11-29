@@ -49,7 +49,7 @@ class CommentMessageHandler implements MessageHandlerInterface
             $this->entityManager->flush();
 
             $this->bus->dispatch($message);
-        }/*elseif ($this->workflow->can($comment, 'publish') || $this->workflow->can($comment, 'publish_ham')) {
+        }elseif ($this->workflow->can($comment, 'publish') || $this->workflow->can($comment, 'publish_ham')) {
 
             $this->mailer->send((new TemplatedEmail())
                 ->subject('New comment posted')
@@ -58,7 +58,7 @@ class CommentMessageHandler implements MessageHandlerInterface
                 ->to($comment->getAuthor()->getEmail())
                 ->context(['comment' => $comment])
             );
-        }*/elseif ($this->logger) {
+        }elseif ($this->logger) {
             $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
         }
     }
