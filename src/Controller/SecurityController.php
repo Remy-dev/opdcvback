@@ -101,11 +101,14 @@ class SecurityController extends AbstractController
 
             $this->manager->persist($this->token);
             $this->manager->flush();
+
             $this->sendMail($user, $this->token);
+
 
             return new Response('', Response::HTTP_OK);
         }
 
+        return new Response('', Response::HTTP_NOT_FOUND);
 
 
     }
@@ -115,7 +118,7 @@ class SecurityController extends AbstractController
         $this->token->setValue(md5($user->getEmail()));
     }
 
-    public function sendMail(User $user, Token $token)
+    public function sendMail($user, Token $token)
     {
 
         $email = (new TemplatedEmail())
