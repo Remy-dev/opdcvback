@@ -137,7 +137,8 @@ class SecurityController extends AbstractController
         return;
     }
     /**
-     * @Route("/mail-validation/{id}/{token}", name="mail-validation", methods={"GET"})
+     * @Route("/mail-validation/{id}/{token}", name="mail-validation", methods={"GET"}, requirements={"id"="\d+"})
+     * @ParamConverter("id", class="App\Entity\User", options={"id": "id"})
      */
     public function mailValidation(User $user, $token,TokenRepository $tokenRepository, Request $request)
     {
