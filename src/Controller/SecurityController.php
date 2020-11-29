@@ -67,10 +67,9 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository)
     {
-        $form = filter_input_array($request->getMethod(),FILTER_SANITIZE_SPECIAL_CHARS);
         try {
             $user =  $serializer->deserialize(
-                $form,
+                $request->getContent(),
                 User::class,
                 'ld+json'
             );
