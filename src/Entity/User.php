@@ -31,11 +31,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *
  *     collectionOperations={
- *          "get",
- *          "post"
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
+ *          "post"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"}
  *     },
  *     itemOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "put"={"security"="is_granted('ROLE_USER')"},
  *          "patch"={"security"="is_granted('ROLE_USER')"},
  *          "delete"={"security"="is_granted('ROLE_USER')"},
@@ -48,8 +48,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter (SearchFilter::class, properties={"tags.name", "companyPro": "partial" })
  * @ApiFilter (BooleanFilter::class, properties={"producer"})
  * @ApiFilter (OrderFilter::class, properties={"id": "ASC"})
- * @ApiFilter(BooleanFilter::class, properties={"producer"})
- * @ApiFilter(RandomFilter::class, properties={"random"})
+ * @ApiFilter (BooleanFilter::class, properties={"producer"})
+ * @ApiFilter (RandomFilter::class, properties={"random"})
  *
  *
  */

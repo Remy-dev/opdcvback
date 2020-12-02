@@ -17,12 +17,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     mercure=true,
  *
  *     collectionOperations={
- *          "get",
- *          "post"
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
+ *          "post"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"}
  *     },
  *     itemOperations={
- *          "get",
- *          "put",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
+ *          "put"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "patch"={"security"="is_granted('ROLE_USER')"},
  *          "delete"={"security"="is_granted('ROLE_MODERATOR')"}
  *     }

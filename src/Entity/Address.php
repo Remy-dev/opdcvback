@@ -12,11 +12,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ApiResource(
  *
  *     collectionOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     itemOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "put"={"security"="is_granted('ROLE_USER')"},
  *          "patch"={"security"="is_granted('ROLE_USER')"},
  *          "delete"={"security"="is_granted('ROLE_USER')"}

@@ -20,7 +20,7 @@ nelmio_cors:
             allow_methods: ['GET', 'OPTIONS']
             max_age: 3600
 
-        '^/admin':
+        '^/login':
             allow_origin: ['%env(CORS_ALLOW_ADMIN_ORIGIN)%']
             allow_headers: ['*']
             allow_methods: ['GET', 'POST', 'HEAD', 'PUT', 'DELETE']

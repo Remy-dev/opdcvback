@@ -15,11 +15,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ORM\Table (name="`product`")
  * @ApiResource (
  *     collectionOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "post"={"security"="is_granted('ROLE_PRODUCER')"}
  *     },
  *     itemOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "put"={"security"="is_granted('ROLE_PRODUCER')"},
  *          "patch"={"security"="is_granted('ROLE_PRODUCER')"},
  *          "delete"={"security"="is_granted('ROLE_PRODUCER')"}

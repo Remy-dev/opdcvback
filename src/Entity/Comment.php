@@ -18,7 +18,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ORM\Table (name="`comment`")
  * @ApiResource (
  *     collectionOperations={
- *          "get",
+ *          "get"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"},
  *          "post"={"security"="is_granted('ROLE_USER')"}
  *     },
  *     itemOperations={

@@ -10,10 +10,9 @@ class RandomFilter extends AbstractContextAwareFilter
 {
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
     {
-
             $queryBuilder
-                ->orderBy('RANDOM()', 'DESC');
-
+                ->orderBy('RANDOM()', 'DESC')
+                ->setMaxResults(1);
     }
 
     // This function is only used to hook in documentation generators (supported by Swagger and Hydra)
