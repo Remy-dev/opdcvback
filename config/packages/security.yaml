@@ -83,9 +83,6 @@ security:
         ROLE_MODERATOR: ROLE_PRODUCER
         ROLE_PRODUCER: ROLE_USER
 
-
-
-          #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

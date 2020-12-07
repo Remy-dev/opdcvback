@@ -8,7 +8,6 @@ DirectoryIndex index.php
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-XSS-Protection "1; mode=block"
-    Header set X-Frame-Options "SAMEORIGIN"
     Header set Cache-Control "private, no-transform, must-revalidate"
 </IfModule>
 # By default, Apache does not evaluate symbolic links if you did not enable this

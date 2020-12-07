@@ -91,6 +91,7 @@ class Itinerary
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("itinerary:write")
      */
     private $description;
 
