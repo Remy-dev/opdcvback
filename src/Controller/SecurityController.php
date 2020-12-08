@@ -66,6 +66,7 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request,UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer, RoleRepository $roleRepository)
     {
+
         try {
             $user =  $serializer->deserialize(
                 $request->getContent(),
@@ -81,6 +82,7 @@ class SecurityController extends AbstractController
                 Response::HTTP_BAD_REQUEST
             );
         }
+
         if ($user instanceof UserInterface )
         {
             $role = $roleRepository->findOneByRoleName('ROLE_USER');
@@ -88,16 +90,13 @@ class SecurityController extends AbstractController
             $encodedPassword = $passwordEncoder->encodePassword($user, $plainPassword);
             $user->setPassword($encodedPassword);
             $user->setRole($role);
-
-            if($user->isProducer())
+            $this->encodeToken($user);
+            $this->manager->persist($user);
+            if(false !== $user->)
             {
                 $role = $roleRepository->findOneByRoleName('ROLE_PRODUCER');
                 $user->setRole($role);
             }
-
-            $this->encodeToken($user);
-            $this->manager->persist($user);
-
             $this->manager->persist($this->token);
             $this->manager->flush();
             $fetchedUser =  $this->userRepository->findOneBy(['username' => $user->getUsername()]);
@@ -109,6 +108,10 @@ class SecurityController extends AbstractController
 
         return new Response('', Response::HTTP_NOT_FOUND);
 
+
+    }
+    public function sanitize(array $datas)
+    {
 
     }
 

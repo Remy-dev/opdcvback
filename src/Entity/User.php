@@ -106,11 +106,11 @@ class User implements UserInterface
     private ?string $phone;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", options={"default" = false})
      * @Groups ({"write", "read"})
      *
      */
-    private ?bool $producer;
+    private ?bool $producer = false;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
